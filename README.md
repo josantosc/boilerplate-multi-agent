@@ -202,6 +202,16 @@ Este mecanismo de atualização constante transforma o sistema em uma ferramenta
 - Confirmação do usuário sobre a precisão da reposta do Agent e atualização da base de conhecimento.
 - Utilizar o modelo [BioBERTpt](https://github.com/HAILab-PUCPR/BioBERTpt), desenvolvido pela PUCPR e treinado especificamente no contexto médico brasileiro, como embeddings para a técnica de RAG, aproveitando um dataset de dados médicos brasileiros para otimizar a relevância e precisão das respostas no domínio médico.
 
+### Como Usar
+
+1. **Via Endpoint**: Uma vez que a API esteja configurada, você pode acessar [seu_endpoint_aqui] para interagir com a aplicação.
+2. **Utilização via API do WhatsApp**: Para utilizar a aplicação através da API, é essencial seguir atentamente as etapas de configuração descritas na seção de integração.
+
+### Vídeo demostrativo da aplicação funcionando.
+- Utilização via Whatsapp
+
+[![Assista ao Vídeo Explicativo](https://img.youtube.com/vi/glqW2wKfoUI/maxresdefault.jpg)](https://www.youtube.com/watch?v=glqW2wKfoUI)
+
 
 ## Contribuindo
 Estamos abertos a contribuições! Sinta-se à vontade para abrir uma issue ou enviar um pull request. Para contribuições significativas, por favor, entre em contato conosco para discutir o que você gostaria de mudar.
