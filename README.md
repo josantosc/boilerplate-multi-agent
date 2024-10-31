@@ -193,8 +193,10 @@ Este mecanismo de atualização constante transforma o sistema em uma ferramenta
 2. **Utilização via API do WhatsApp**: Para utilizar a aplicação através da API, é essencial seguir atentamente as etapas de configuração descritas na seção de integração.
 
 ### Vídeo demostrativo da aplicação funcionando.
-- Interação via Whatsapp
- []()
+- Utilização via Whatsapp
+
+[![Assista ao Vídeo Explicativo](https://img.youtube.com/vi/glqW2wKfoUI/maxresdefault.jpg)](https://www.youtube.com/watch?v=glqW2wKfoUI)
+
 
 ## Contribuindo
 Estamos abertos a contribuições! Sinta-se à vontade para abrir uma issue ou enviar um pull request. Para contribuições significativas, por favor, entre em contato conosco para discutir o que você gostaria de mudar.
