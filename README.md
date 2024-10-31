@@ -186,9 +186,11 @@ Este mecanismo de atualização constante transforma o sistema em uma ferramenta
 ![Fluxo de Trabalho](https://raw.githubusercontent.com/josantosc/boilerplate-multi-agent/refs/heads/master/medias/imagens/workflow.png)
 ### Como Usar
 
-1. **Via Endpoint**: Uma vez que a API esteja configurada, você pode acessar [seu_endpoint_aqui] para interagir com a aplicação.
+1. **Via Endpoint**: Uma vez que a API esteja configurada, você pode acessar [api/v1/use_case/medical_agent] para interagir com a aplicação.
 2. **Utilização via API do WhatsApp**: Para utilizar a aplicação através da API, é essencial seguir atentamente as etapas de configuração descritas na seção de integração.
 
+### Imagem da utilização via API.
+![API](https://raw.githubusercontent.com/josantosc/boilerplate-multi-agent/refs/heads/master/medias/imagens/api_agent.png)
 ### Vídeo demostrativo da aplicação funcionando.
 - Utilização via Whatsapp
 
