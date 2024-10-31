@@ -182,11 +182,8 @@ Além disso, o sistema armazena informações consideradas relevantes pelo siste
 
 Este mecanismo de atualização constante transforma o sistema em uma ferramenta dinâmica e evolutiva para responder com precisão a consultas médicas, mantendo sua base de conhecimento atualizada.
 
-### Trabalhos futuros
-- Reconhecimento e armazenamento de preferências do usuário, como a preferência por um tom mais formal nas respostas. Quando essa preferência é confirmada, o sistema atualiza a base de conhecimento, registrando a pergunta e a resposta no estilo desejado.
-- Confirmação do usuário sobre a precisão da reposta do Agent e atualização da base de conhecimento.
-- Utilizar o modelo [BioBERTpt](https://github.com/HAILab-PUCPR/BioBERTpt), desenvolvido pela PUCPR e treinado especificamente no contexto médico brasileiro, como embeddings para a técnica de RAG, aproveitando um dataset de dados médicos brasileiros para otimizar a relevância e precisão das respostas no domínio médico.
-
+### Workflow do Agent
+![Fluxo de Trabalho](https://raw.githubusercontent.com/josantosc/boilerplate-multi-agent/refs/heads/master/medias/imagens/workflow.png)
 ### Como Usar
 
 1. **Via Endpoint**: Uma vez que a API esteja configurada, você pode acessar [seu_endpoint_aqui] para interagir com a aplicação.
@@ -196,6 +193,11 @@ Este mecanismo de atualização constante transforma o sistema em uma ferramenta
 - Utilização via Whatsapp
 
 [![Assista ao Vídeo Explicativo](https://img.youtube.com/vi/glqW2wKfoUI/maxresdefault.jpg)](https://www.youtube.com/watch?v=glqW2wKfoUI)
+
+### Trabalhos futuros
+- Reconhecimento e armazenamento de preferências do usuário, como a preferência por um tom mais formal nas respostas. Quando essa preferência é confirmada, o sistema atualiza a base de conhecimento, registrando a pergunta e a resposta no estilo desejado.
+- Confirmação do usuário sobre a precisão da reposta do Agent e atualização da base de conhecimento.
+- Utilizar o modelo [BioBERTpt](https://github.com/HAILab-PUCPR/BioBERTpt), desenvolvido pela PUCPR e treinado especificamente no contexto médico brasileiro, como embeddings para a técnica de RAG, aproveitando um dataset de dados médicos brasileiros para otimizar a relevância e precisão das respostas no domínio médico.
 
 
 ## Contribuindo
