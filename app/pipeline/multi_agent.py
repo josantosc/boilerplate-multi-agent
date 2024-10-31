@@ -50,7 +50,6 @@ def create_workflow():
     workflow.add_node("generate", generate_response)
     workflow.add_node("feedback_user", feedback_user)
 
-
     workflow.add_edge(START, "agent")
     #workflow.add_conditional_edges("agent", tools_condition, {"tools": "retrieve"})
     workflow.add_conditional_edges("agent", is_iamessage,
@@ -64,7 +63,6 @@ def create_workflow():
 
     return workflow.compile(checkpointer=memory, debug=True)
 
-#create_workflow().get_graph().draw_mermaid_png(output_file_path="/media/jo/Data6/ramped/boilerplate-multi-agent/image.png")
 
 def agent_rag(message, thread_id: str):
     graph = create_workflow()

@@ -13,7 +13,8 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
-@router.get("/")
+@router.get("/",summary="Verificação de Webhook",
+            description="Endpoint para verificação do webhook utilizando token")
 def verify(request: Request):
     try:
         if request.query_params['hub.mode'] and request.query_params['hub.verify_token']:
@@ -28,8 +29,9 @@ def verify(request: Request):
         return Response(content='verify token requerido', status_code=403)
 
 
-@router.post("/", summary="webhook",
-             description="Webhook",
+@router.post("/",  summary="Webhook para processamento de mensagens",
+             description="Recebe mensagens da API do WhatsApp, processa e envia respostas.",
+
              )
 async def webhook(request: Request):
     try:
@@ -57,14 +59,4 @@ async def webhook(request: Request):
     except Exception as e:
         logger.error(f"Failed to send notification: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to send notification: {str(e)}")
-
-
-@router.post("/workflow", summary="Workflow",
-             description="Workflow Multi Agent",
-             )
-async def workflow(*, message: str, thread: Optional[str]):
-    response = agent_rag(message, thread)
-    return {"message": response}
-
-
 

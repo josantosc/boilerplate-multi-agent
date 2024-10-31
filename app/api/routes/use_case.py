@@ -1,70 +1,23 @@
 import json
 import logging
-from typing import Optional
+from typing import Optional, Annotated
 
-from fastapi import APIRouter, HTTPException, Request, Response
+from fastapi import APIRouter, Path, Query
 from app.pipeline.multi_agent import agent_rag
-from app.utils.agent.worflow_function import extract_message_data, get_thread_info, update_thread_info
-from app.utils.whatsapp import WhatsApp
-from app.core.config import settings
-from app.utils.whatsapp.process_message import process_message
+
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
-@router.get("/")
-def verify(request: Request):
-    try:
-        if request.query_params['hub.mode'] and request.query_params['hub.verify_token']:
-            if request.query_params['hub.mode'] == 'subscribe' and request.query_params[
-                'hub.verify_token'] == settings.VERYFY_TOKEN:
-                print('WEBHOOK_VERIFIED')
-                return Response(content=request.query_params['hub.challenge'], status_code=200)
-            else:
-                return Response(content='verify token requerido ', status_code=403)
-    except:
-        print('NO VERIFY')
-        return Response(content='verify token requerido', status_code=403)
+@router.post("/medical_agent", summary="MedQuAD com RAG (Retrieval-Augmented Generation)",
+             description="Este endpoint permite testes rápidos de um sistema multiagente projetado para responder a questões sobre "
+                         "doenças e tratamentos médicos. Ele utiliza o dataset MedQuAD-MedicalQnADataset como base de conhecimento "
+                         "para aprimorar as capacidades do modelo de linguagem (LLM) por meio da técnica RAG (Retrieval-Augmented Generation).",
 
-
-@router.post("/", summary="webhook",
-             description="Webhook",
              )
-async def webhook(request: Request):
-    try:
-        body = await request.json()
-        message_data, status = await extract_message_data(body)
-
-        if status:
-            return {"status": status}
-        if not message_data:
-            raise HTTPException(status_code=400, detail="Invalid or missing message data")
-
-        sender_id, phone_number_id, text = message_data["sender_id"], message_data["phone_number_id"], message_data[
-            "text"]
-        logger.info(f"MESSAGE USER: {text}")
-
-        whatsapp = WhatsApp(token=settings.WHATSAPP_TOKEN, phone_number_id=phone_number_id)
-        thread_info = get_thread_info(sender_id)
-
-        response = process_message(thread_info, text, sender_id, whatsapp)
-
-        return {"message": response, "status": 200}
-
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=400, detail="Malformed JSON or empty body")
-    except Exception as e:
-        logger.error(f"Failed to send notification: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Failed to send notification: {str(e)}")
-
-
-@router.post("/workflow", summary="Workflow",
-             description="Workflow Multi Agent",
-             )
-async def workflow(*, message: str, thread: Optional[str]):
+async def medical_agent(*,
+                        message: str = Query(description="O texto da consulta médica enviado pelo usuário. Este campo é obrigatório e serve como entrada."),
+                        thread: Annotated[str | None, Query(description="Um identificador opcional para a conversa ou sessão. Este campo é usado para manter o contexto de interações anteriores")] = None):
     response = agent_rag(message, thread)
     return {"message": response}
-
-
-

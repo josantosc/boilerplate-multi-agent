@@ -3,8 +3,13 @@ version: '3'
 networks:
   net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+
 services:
   chromadb:
+    container_name: chromadb
     image: chromadb/chroma:0.5.13
     volumes:
       - ./chromadb:/chroma/chroma
@@ -12,7 +17,63 @@ services:
       - IS_PERSISTENT=TRUE
       - PERSIST_DIRECTORY=/chroma/chroma
       - ANONYMIZED_TELEMETRY=${ANONYMIZED_TELEMETRY:-TRUE}
+      - ALLOW_RESET=TRUE
     ports:
       - 8002:8002
     networks:
-      - net
+      net:
+        ipv4_address: 172.30.0.2
+
+  redis:
+    container_name: redis
+    image: redis
+    expose:
+      - 6379
+    ports:
+      - '6379:6379'
+    volumes:
+      - './redis/:/etc/redis/'
+      - 'redis_store:/var/lib/redis'
+    networks:
+      net:
+        ipv4_address: 172.30.0.4
+
+  webapp:
+    container_name: webapp
+    image: app
+    environment:
+        - PROJECT_NAME="SERVER"
+        - FIRST_SUPERUSER=admin@gmail.com
+        - FIRST_SUPERUSER_PASSWORD=mudar123
+        - FIRST_FULL_NAME=admin
+        - POSTGRES_SERVER=localhost
+        - POSTGRES_DB=postgres
+        - POSTGRES_PORT=5432
+        - POSTGRES_USER=admin
+        - POSTGRES_PASSWORD=admin
+        - BACKEND_CORS_ORIGINS="http://localhost,http://localhost:5173,https://localhost,https://localhost:5173,http://localhost.tiangolo.com"
+        - SECRET_KEY=mudar123
+        - BASE_URL_WHATSAPP=https://graph.facebook.com/v20.0
+        - WHATSAPP_TOKEN=
+        - WHATSAPP_PHONE_NUMBER_ID=
+        - VERYFY_TOKEN=12345
+        - OPENAI_API_KEY=
+        - STACK_NAME=joe-fastapi-project
+        - DOMAIN=localhost
+        - ENVIRONMENT=local
+        - REDIS_HOST=172.30.0.4
+        - REDIS_PORT=6379
+        - EXPIRATION_TIME=24
+        - URL_DATA_RAG=hf://datasets/keivalya/MedQuad-MedicalQnADataset/medDataset_processed.csv
+
+    ports:
+      - "8001:8001"
+    networks:
+      net:
+        ipv4_address: 172.30.0.5
+    depends_on:
+      - redis
+      - chromadb
+
+volumes:
+  redis_store:

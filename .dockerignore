@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Python env
+.env
+.vscode/
+.idea/
+*.iml
+
+# Diretorios específicos de teste/produção
+tests/
+venv/
+.venv/
+build/
+dist/
+
+# Logs
+*.log
+
+*.env

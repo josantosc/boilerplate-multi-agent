@@ -33,7 +33,7 @@ def validate_questions(state) -> Literal["generate", "rewrite", "__end__"]:
     score = scored_result.binary_score
 
     if score == "sim":
-        manager.add_texts([question, docs])
+        manager.add([question, docs])
         return "generate"
     else:
         return "rewrite"
