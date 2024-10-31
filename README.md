@@ -190,7 +190,7 @@ Este mecanismo de atualização constante transforma o sistema em uma ferramenta
 2. **Utilização via API do WhatsApp**: Para utilizar a aplicação através da API, é essencial seguir atentamente as etapas de configuração descritas na seção de integração.
 
 ### Imagem da utilização via API.
-![API](https://raw.githubusercontent.com/josantosc/boilerplate-multi-agent/refs/heads/master/medias/imagens/api_agent.png)
+![API](https://raw.githubusercontent.com/josantosc/boilerplate-multi-agent/refs/heads/master/medias/imagens/api_agent.jpeg)
 ### Vídeo demostrativo da aplicação funcionando.
 - Utilização via Whatsapp
 
