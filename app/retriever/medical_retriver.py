@@ -7,13 +7,12 @@ from app.data_preparation.medical_data import retriever
 retriever_tool = create_retriever_tool(
     retriever,
     "retrieve",
-    "Search and return relevant information",
+    "Search and return relevant information about the healthcare field",
 )
 
 
 def rewrite_query(state):
     messages = state["messages"]
-    tamanho = len(state["messages"])
     if len(state["messages"]) >= 6:
         return state
 
@@ -36,15 +35,15 @@ def rewrite_query(state):
 
 def feedback_user(state):
     messages = state["messages"]
-    question = messages[-1].content
+    question = messages[0].content
+    answer = messages[-1].content
+
     msg = [
         HumanMessage(content=f"""
-          \nObserve a entrada e tente raciocinar sobre a intenção/significado semântico subjacente.
-          \n Aqui está a entrada inicial: 
-          \n ------- 
-          \n {question} 
-          \n ------- 
-          \n Formule uma resposta melhorada sem alucinação, em apenas 3 linhas de forma concisa:
+          \nObserve a pergunta e o contexto, tente raciocinar sobre a intenção/significado semântico subjacente.
+          \n Aqui está o contexto: {answer}
+          \n Aqui está a pergunta do usuário: {question}
+          \n Formule uma resposta melhorada sem alucinação, entre 10 a 50 tokens, reposta concisa e sempre traduza para português do brasil:
            """)
     ]
 

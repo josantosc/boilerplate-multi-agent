@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     DOMAIN: str = Field("local", env="DOMAIN")
     ENVIRONMENT: Literal["local", "staging", "production"] = "local"
     ENV_SERVER: str = Field("LOCAL", env="ENV_SERVER")
+    URL_DATA_RAG: str = Field("hf://datasets/keivalya/MedQuad-MedicalQnADataset/medDataset_processed.csv", env="URL_DATA_RAG")
 
     @computed_field  # type: ignore[misc]
     @property
@@ -81,7 +82,6 @@ class Settings(BaseSettings):
 
     BASE_URL_WHATSAPP: str | None = None
     BASE_URL_V15_WHATSAPP: str | None = None
-    GCP_CREDENTIALS: str | None = None
     DIALOGFLOW_PROJECT_ID: str | None = None
 
     OPENAI_API_KEY: str | None = None

@@ -9,6 +9,7 @@ from langgraph.graph.message import add_messages
 from langchain_core.messages import BaseMessage, HumanMessage
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import ToolNode
+from IPython.display import Image, display
 
 from app.generator.medical_generator import generate_response, validate_questions
 from app.retriever.medical_retriver import retriever_tool, rewrite_query, feedback_user
@@ -41,17 +42,19 @@ def is_iamessage(state):
 
 def create_workflow():
     workflow = StateGraph(MessagesState)
-    workflow.add_node("agent", agent)
+    workflow.add_node("agent", lambda state: {"messages": llm.bind_tools(tools).invoke(state['messages'])})
+    #workflow.add_node("agent", agent)
     retrieve = ToolNode([retriever_tool])
     workflow.add_node("retrieve", retrieve)
     workflow.add_node("rewrite", rewrite_query)
     workflow.add_node("generate", generate_response)
     workflow.add_node("feedback_user", feedback_user)
 
+
     workflow.add_edge(START, "agent")
-    workflow.add_conditional_edges("agent", tools_condition, {"tools": "retrieve", END: END})
+    #workflow.add_conditional_edges("agent", tools_condition, {"tools": "retrieve"})
     workflow.add_conditional_edges("agent", is_iamessage,
-                                   {"retrieve": "retrieve", "feedback_user": "feedback_user", END: END})
+                                   {"retrieve": "retrieve", "feedback_user": "feedback_user"})
     workflow.add_conditional_edges("retrieve", validate_questions)
     workflow.add_edge("generate", "feedback_user")
     workflow.add_edge("feedback_user", END)
@@ -61,6 +64,7 @@ def create_workflow():
 
     return workflow.compile(checkpointer=memory, debug=True)
 
+#create_workflow().get_graph().draw_mermaid_png(output_file_path="/media/jo/Data6/ramped/boilerplate-multi-agent/image.png")
 
 def agent_rag(message, thread_id: str):
     graph = create_workflow()
